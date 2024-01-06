@@ -1,6 +1,9 @@
+from urllib.parse import urlparse
+
 import requests
 from bs4 import BeautifulSoup
 import json
+import urllib
 
 url = 'https://myciclon.com/shop/'
 headers = {
@@ -37,7 +40,12 @@ for a_tag in ul_tag:
 
             if jsn:
                 for image in json.loads(jsn):
-                    print(image['image']['url'])
+                    img_link = image['image']['url']
+                    print(str(image).split(',')[0].split(' ')[-1])
+                    # img_name = urlparse(img_link).path.split('/')[-1].replace(".jpg", "") + "_" + value
+                    # print(img_name)
+                    # with open(img_name + "_" + value + ".jpg", 'wb') as f:
+                    #     f.write(img_response.content)
             # Находим тег select
             # select_tag = soup.find('select', {"id": "pa_color"})
             # if select_tag:
