@@ -29,7 +29,7 @@ for a_tag in ul_tag:
             print(cat_a_tag['href'])
             jsn = None
             img_href = ""
-
+            pa_color_list, pa_size_list = [], []
             try:
                 jsn = soup.find(class_="variations_form")['data-product_variations']
             except Exception:
@@ -41,7 +41,24 @@ for a_tag in ul_tag:
             if jsn:
                 for image in json.loads(jsn):
                     img_link = image['image']['url']
-                    print(str(image).split(',')[0].split(' ')[-1])
+                    a_color = image['attributes'].get('attribute_pa_color', "")
+                    a_size = image['attributes'].get('attribute_pa_size', "")
+                    print(image)
+                    if 'attribute_pa_color' in image['attributes']:
+                        if a_color not in pa_color_list:
+                            pa_color_list.append(a_color)
+                    if 'attribute_pa_size' in image['attributes']:
+                        if a_size not in pa_size_list:
+                            pa_size_list.append(a_size)
+
+            print(', '.join(pa_color_list))
+            print(', '.join(pa_size_list))
+                    # try:
+                    #     print(image['attributes']['attribute_pa_color'])
+                    # except Exception:
+                    #     print(image['attributes']['attribute_pa_size'])
+
+                    # print(str(image).split(',')[0].split(' ')[-1])
                     # img_name = urlparse(img_link).path.split('/')[-1].replace(".jpg", "") + "_" + value
                     # print(img_name)
                     # with open(img_name + "_" + value + ".jpg", 'wb') as f:
@@ -68,12 +85,12 @@ for a_tag in ul_tag:
             #         print(img_tags)
             #         for img_tag in img_tags:
             #             pass
-                        # img_url = img_tag['href']
-                        # print(img_url)
-                        # ВЫТАЩИТЬ СРЦ ИЗ ИМДЖ, ИМДЖ НЕ НАХОДИТ
-                        # print(img_tag['href'])
-                        # img_response = requests.get(img_url)
-                        # img_name = urlparse(img_url).path.split('/')[-1].replace(".jpg", "") + "_" + value
-                        # print(img_name)
-                        # with open(img_name + "_" + value + ".jpg", 'wb') as f:
-                        #     f.write(img_response.content)
+            # img_url = img_tag['href']
+            # print(img_url)
+            # ВЫТАЩИТЬ СРЦ ИЗ ИМДЖ, ИМДЖ НЕ НАХОДИТ
+            # print(img_tag['href'])
+            # img_response = requests.get(img_url)
+            # img_name = urlparse(img_url).path.split('/')[-1].replace(".jpg", "") + "_" + value
+            # print(img_name)
+            # with open(img_name + "_" + value + ".jpg", 'wb') as f:
+            #     f.write(img_response.content)
